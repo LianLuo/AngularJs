@@ -1,0 +1,61 @@
+<div>
+	<style type="text/css">
+		.dcscon{
+			clear: both;
+			width: 100%;
+		}
+		.canpinlist{
+			margin: 0px 10px 5px 10px;
+			padding-bottom: 10px;
+			text-align: center;
+			float: left;
+			width: 30%;
+			overflow: hidden;
+		}
+		.canpinlist_left{
+			float: left;
+			text-align: left;
+			margin-right: 15px;
+		}
+		.canpinlist_right{
+			float:left;
+			text-align: left;
+		}
+		.fang{
+			border: 1px solid #e5e5e5;
+			background: #fff;
+			padding: 2px;
+			text-align: center;
+		}
+		.picFit{
+			overflow: hidden;
+		}
+	</style>
+	<h1>List index</h1>
+	<div>
+		<div class="dcscon" data-ng-repeat="item in products">
+			<div class="canpinlist">
+				<div class="canpinlist_left">
+					<div class="fang" style="width: 150px;height: 140px;">
+						<div class="picFit" style="width: 150px;height: 140px;">
+							<img src="{{item.avatar}}" style="height: 140px;" border="0" />
+						</div>
+					</div>
+				</div>
+				<div class="canpinlist_right">
+					<span class="prop" style="display: block;">
+						<div style="width: 120px;">菜名：<font style="font-weight: bold;">{{item.productName}}</font></div>
+						<div style="height:16px;">单价：<font style="color:#ff0000;">{{item.price}}</font>元/份</div>
+						<div style="height:16px;">积分：<font style="color:#ff0000;">6</font>分/份</div>
+						<div style="width:120px;">主料：猪肉、香芹</div>
+						<div style="height:16px;">口味：<font style="color:#ff0000;">中辣</font></div>
+						<div style="height:16px;">可订份数：<font style="color:#ff0000;">21</font>份</div>
+						<div style="margin-top: 5px;">
+							<img src="/Angular-1.0/images/img_dinggou.gif" border="0" style="cursor: pointer;" data-ng-click="" />
+						</div>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
