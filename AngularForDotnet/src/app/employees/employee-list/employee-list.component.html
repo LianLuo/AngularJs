@@ -1,0 +1,10 @@
+<table class="table table-hover">
+    <tr *ngFor="let emp of service.list">
+        <td>[{{emp.EMPCode}}] - {{emp.FullName}}</td>
+        <td>{{emp.Mobile}}</td>
+        <td>{{emp.Position}}</td>
+        <td>
+            <button class="btn btn-sm btn-outer-danger">X</button>
+        </td>
+    </tr>
+</table>
