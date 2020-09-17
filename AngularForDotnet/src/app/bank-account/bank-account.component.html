@@ -12,31 +12,39 @@
             <div class="td">Bank</div>
             <div class="td">Remark</div>
             <div class="td">
-                Action
+                <button class="btn btn-outline-success" (click)="addBackAccountForm()">
+                    <i class="fa fa-plus"></i> New Account
+                </button>
             </div>
         </div>
         
     </div>
     <div class="tbody">
-        <form class="tr" [formGroup]="fg" *ngFor="let fg of bankAccountForms.controls;let i=index;">
+        <form class="tr" [formGroup]="fg" *ngFor="let fg of bankAccountForms.controls;let i=index;" (submit)="onSubmit(fg)">
             <div class="td">
-                <input class="form-control" formControlName="accountNumber">
+                <input class="form-control" formControlName="AccountNumber">
             </div>
             <div class="td">
-                <input class="form-control" formControlName="accountHolder">
+                <input class="form-control" formControlName="AccountHolder">
             </div>
             <div class="td">
-                <select class="form-control" formControlName="bankID">
+                <select class="form-control" formControlName="BankID">
                     <option value="0">select</option>
-                    <option *ngFor="let item of bankList" value="{{item.bankID}}">{{item.bankName}}</option>
+                    <option *ngFor="let item of bankList" value="{{item.BankID}}">{{item.BankName}}</option>
                 </select>
                 
             </div>
             <div class="td">
-                <input class="form-control" formControlName="remark">
+                <input class="form-control" formControlName="Remark">
             </div>
             <div class="td">
-                <button class="btn btn-success" [disabled]="fg.invalid">Submit</button>
+                <button type="submit" class="btn" [ngClass]="fg.get('BankAccountID').value ==0?'btn-success':'btn-outline-dark'" [disabled]="fg.invalid">
+                    <i class="far fa-save"></i>
+                    {{fg.get('BankAccountID').value ==0?'submit':'update'}}
+                </button>
+                <button class="btn btn-light ml-1" (click)="onDelete(fg,i)">
+                    <i class="far fa-trash-alt fa-lg text-danger">X</i>
+                </button>
             </div>
         </form>
     </div>

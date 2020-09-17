@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EmployeeService } from "../../services/employee.service";
 import { ToastrService } from 'ngx-toastr';
+import { Employee } from 'src/app/models/employee.model';
 
 @Component({
   selector: 'app-employee',
@@ -26,10 +27,15 @@ export class EmployeeComponent implements OnInit {
       this.service.createEmployee(form.value).subscribe(res=>{
         this.resetForm(form);
         this.toastr.success('Inserted Successful.','EMP. Register');
+        this.service.getEmployees();
       });
     }else
     {
-      this.service.updateEmployee(form.value);
+      this.service.updateEmployee(form.value).subscribe(res=>{
+        this.resetForm(form);
+        this.toastr.info("Updated Successful.","EMP. Register.");
+        this.service.getEmployees();
+      });
     }
   }
 

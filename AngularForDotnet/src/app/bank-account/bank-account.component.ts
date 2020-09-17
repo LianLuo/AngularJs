@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { BankService } from "../services/bank.service";
+import { BankAccountService } from "../services/bank-account.service";
+import { BankAccount } from '../models/bank-account.model';
 
 @Component({
   selector: 'app-bank-account',
@@ -14,21 +16,62 @@ export class BankAccountComponent implements OnInit {
 
   constructor(
     private fb:FormBuilder,
-    private bankService:BankService) { }
+    private bankService:BankService,
+    private service:BankAccountService
+    ) { }
 
   ngOnInit(): void {
-    this.addBackAccountForm();
-    this.bankService.getBankList().subscribe(bs => this.bankList = bs as []);
+    this.refreshList();
+    this.bankService.getBankList().subscribe(res=>{
+      this.bankList = res as [];
+    });
   }
 
-  addBackAccountForm(){
+  addBackAccountForm(form?:NgForm){
     this.bankAccountForms.push(this.fb.group({
-      bankAccountID:[0],
-      accountNumber:['', Validators.required],
-      accountHolder:['',Validators.required],
-      bankID:[0,Validators.min(1)],
-      remark:['',Validators.required]
+      BankAccountID:[0],
+      AccountNumber:['', Validators.required],
+      AccountHolder:['',Validators.required],
+      BankID:[0,Validators.min(1)],
+      Remark:['',Validators.required]
     }));
+    
+  }
+
+  refreshList(){
+    this.service.fetchBankAccounts().subscribe(result=>{
+      (result as BankAccount[]).forEach(f=>{
+        this.bankAccountForms.push(this.fb.group({
+          BankAccountID:[f.BankAccountID],
+          AccountNumber:[f.AccountNumber, Validators.required],
+          AccountHolder:[f.AccountHolder,Validators.required],
+          BankID:[f.BankID,Validators.min(1)],
+          Remark:[f.Remark,Validators.required]
+        }));
+      });
+    });
+  }
+
+  onSubmit(fg:FormGroup){
+    const bankAccount = fg.value as BankAccount;
+    if(bankAccount != null && bankAccount.BankAccountID != 0)
+    {
+      this.service.updateBankAccount(bankAccount).subscribe(res=>{
+        this.refreshList();
+      });
+    }
+    else{
+      this.service.createBankAccount(bankAccount).subscribe((f:any)=>{
+        fg.patchValue({BankAccountID:f.BankAccountID});
+      });
+    }
+    
+  }
+
+  onDelete(fg:FormGroup,i:number){
+    this.service.deleteBankAccount(fg.value).subscribe(res=>{
+      this.bankAccountForms.removeAt(i);
+    });
   }
 
 }
