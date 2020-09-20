@@ -1,0 +1,54 @@
+<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
+    <input type="hidden" name="EMPID" #EMPID="ngModel" [(ngModel)]="service.formData.EMPID" [value]="service.formData.EMPID" />
+    <div class="form-group">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text bg-white">
+                        <i class="fas fa-user-circle" [class.green-icon]="CardOwnerName.valid" [class.red-icon]="CardOwnerName.invalid && CardOwnerName.touched"></i>
+                    </div>
+                </div>
+                <input name="CardOwnerName" #CardOwnerName="ngModel" [(ngModel)]="service.formData.CardOwnerName" class="form-control" placeholder="Card Owner Name" required>
+            </div>
+        </div>        
+    </div>
+    <div class="form-group">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text bg-white">
+                        <i class="far fa-credit-card" [class.green-icon]="CardNumber.valid" [class.red-icon]="CardNumber.invalid && CardNumber.touched"></i>
+                    </div>
+                </div>
+                <input name="CardNumber" #CardNumber="ngModel" [(ngModel)]="service.formData.CardNumber" class="form-control" placeholder="Card Number" maxlength="16" minlength="16" required>
+            </div>
+        </div>        
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-7">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text bg-white">
+                        <i class="far fa-calendar-alt" [class.green-icon]="ExpiretionDate.valid" [class.red-icon]="ExpiretionDate.invalid && ExpiretionDate.touched"></i>
+                    </div>
+                </div>
+                <input name="ExpiretionDate" #ExpiretionDate="ngModel" [(ngModel)]="service.formData.ExpiretionDate" class="form-control" placeholder="MM/YY" maxlength="5" minlength="5" required>
+            </div>
+        </div>        
+        <div class="form-group col-md-5">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <div class="input-group-text bg-white">
+                        <i class="fas fa-key" [class.green-icon]="CVV.valid" [class.red-icon]="CVV.invalid && CVV.touched"></i>
+                    </div>
+                </div>
+                <input type="password" name="CVV" #CVV="ngModel" [(ngModel)]="service.formData.CVV" class="form-control" maxlength="3" minlength="3" required>
+            </div>
+        </div>        
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="form.invalid">
+            <i class="fas fa-database"></i> Submit
+        </button>
+    </div>
+</form>
