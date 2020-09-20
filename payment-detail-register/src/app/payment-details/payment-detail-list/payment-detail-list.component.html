@@ -1,0 +1,10 @@
+<table class="table table-hover">
+    <tr *ngFor="let item of service.list;let i=index;">
+        <td (click)="onSelected(item);">{{item.CardNumber}}</td>
+        <td (click)="onSelected(item);">{{item.CardOwnerName}}</td>
+        <td (click)="onSelected(item);">{{item.ExpiretionDate}}</td>
+        <td (click)="onDeleted(item.EMPID)">
+            <i class="far fa-trash-alt fa-lg text-danger"></i>
+        </td>
+    </tr>
+</table>
