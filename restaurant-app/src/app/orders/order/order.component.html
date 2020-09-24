@@ -1,0 +1,88 @@
+<form #form="ngForm" autocomplete="off" *ngIf="service.formData">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Order No.</label>
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input name="OrderNum" #OrderNum="ngModel" [(ngModel)]="service.formData.OrderNum"
+                        class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Customer</label>
+                <select name="CustomerID" #CustomerID="ngModel" [(ngModel)]="service.formData.CustomerID"
+                    class="form-control">
+                    <option value="0">-select-</option>
+                    <option *ngFor="let item of service.customerList" value="{{item.CustomerID}}">{{item.Name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Payment Method</label>
+                <select name="PostMethod" #PostMethod="ngModel" [(ngModel)]="service.formData.PostMethod"
+                    class="form-control">
+                    <option value="">-select-</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Card">Card</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Grand Total</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">$</div>
+                    </div>
+                    <input name="TotalRevenu" #TotalRevenu="ngModel" [(ngModel)]="service.formData.TotalRevenu"
+                        class="form-control">
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- order items table -->
+    <table class="table table-borderless">
+        <thead class="thead-light">
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>
+                <a class="btn btn-sm btn-success text-white" (click)='onAddItem(null,service.formData.OrderID)'>
+                    <i class="fa fa-plus"></i> Add Item
+                </a>
+            </th>
+        </thead>
+        <tr *ngIf="service.orderItems.length == 0" >
+          <td class="font-itatic text-center" colspan='5'>
+              No Food item selected for this order.
+          </td>
+      </tr>
+        <tbody>
+            <tr *ngFor="let item of service.orderItems;let i=index;">
+                <td>{{item.ItemName}}</td>
+                <td>{{item.Price}}</td>
+                <td>{{item.Quantity}}</td>
+                <td>{{item.Total}}</td>
+                <td>
+                    <a class="btn btn-sm btn-info text-white" (click)='onAddItem(i,service.formData.OrderID)'>
+                        <i class="fa fa-pencil"></i> Add Item
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="form-group">
+        <button class="btn btn-dark btn-lg">
+            <i class="fa fa-database"></i> Submit
+        </button>
+    </div>
+</form>
