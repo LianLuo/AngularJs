@@ -1,4 +1,4 @@
-<form #form="ngForm" autocomplete="off" *ngIf="service.formData">
+<form #form="ngForm" autocomplete="off" *ngIf="service.formData" (submit)="onSaveOrUpdate(form)">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -8,7 +8,7 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">#</div>
                     </div>
-                    <input name="OrderNum" #OrderNum="ngModel" [(ngModel)]="service.formData.OrderNum"
+                    <input readonly name="OrderNum" #OrderNum="ngModel" [(ngModel)]="service.formData.OrderNum"
                         class="form-control">
                 </div>
             </div>
@@ -17,20 +17,19 @@
             <div class="form-group">
                 <label>Customer</label>
                 <select name="CustomerID" #CustomerID="ngModel" [(ngModel)]="service.formData.CustomerID"
-                    class="form-control">
+                    class="form-control" [class.is-invalid]="!this.isValid && service.formData.CustomerID == 0">
                     <option value="0">-select-</option>
-                    <option *ngFor="let item of service.customerList" value="{{item.CustomerID}}">{{item.Name}}</option>
+                    <option *ngFor="let item of commonService.cusotemrsList" value="{{item.CustomerID}}">{{item.CustomerName}}</option>
                 </select>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label>Payment Method</label>
-                <select name="PostMethod" #PostMethod="ngModel" [(ngModel)]="service.formData.PostMethod"
-                    class="form-control">
-                    <option value="">-select-</option>
-                    <option value="Cash">Cash</option>
-                    <option value="Card">Card</option>
+                <select name="PostMethod" #PostMethod="ngModel" [(ngModel)]="service.formData.PaymentID"
+                    class="form-control" [class.is-invalid]="!isValid && service.formData.PaymentID == 0">
+                    <option value="0">-select-</option>
+                    <option *ngFor="let item of commonService.paymentsList" value="{{item.PaymentID}}">{{item.PayMethod}}</option>
                 </select>
             </div>
         </div>
@@ -41,7 +40,7 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">$</div>
                     </div>
-                    <input name="TotalRevenu" #TotalRevenu="ngModel" [(ngModel)]="service.formData.TotalRevenu"
+                    <input readonly name="TotalRevenu" #TotalRevenu="ngModel" [(ngModel)]="service.formData.TotalRevenu"
                         class="form-control">
                 </div>
 
@@ -62,7 +61,7 @@
             </th>
         </thead>
         <tr *ngIf="service.orderItems.length == 0" >
-          <td class="font-itatic text-center" colspan='5'>
+          <td class="font-itatic text-center" colspan='5' [class.text-danger]="!isValid && service.orderItems.length == 0">
               No Food item selected for this order.
           </td>
       </tr>
@@ -74,15 +73,21 @@
                 <td>{{item.Total}}</td>
                 <td>
                     <a class="btn btn-sm btn-info text-white" (click)='onAddItem(i,service.formData.OrderID)'>
-                        <i class="fa fa-pencil"></i> Add Item
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <a class="btn btn-sm btn-danger text-white ml-1" (click)="onDelete(item.OrderItemID,i)">
+                        <i class="fa fa-trash"></i>
                     </a>
                 </td>
             </tr>
         </tbody>
     </table>
     <div class="form-group">
-        <button class="btn btn-dark btn-lg">
+        <button class="btn btn-dark">
             <i class="fa fa-database"></i> Submit
         </button>
+        <a routerLink="/orders" class="btn btn-outline-dark ml-1">
+            <a href="" class="fa fa-table"></a> View Orders
+        </a>
     </div>
 </form>

@@ -2,15 +2,15 @@
     Order Food Item
 </h4>
 <hr>
-<form #form="ngForm" autocomplete="off">
-    <input type="hidden" name="ItemName" [value]="formData.ItemName">
-    <input type="hidden" name="OrderItemId" [value]="formData.OrderItemID">
-    <input type="hidden" name="OrderID" [value]="formData.OrderID">
+<form #form="ngForm" autocomplete="off" (submit)="onAddOrUpdate(form)">
+    <input type="hidden" name="ItemName" #ItemName="ngModel" [(ngModel)]="formData.ItemName">
+    <input type="hidden" name="OrderItemId" #OrderItemId="ngModel" [(ngModel)]="formData.OrderItemID">
+    <input type="hidden" name="OrderID" #OrderID="ngModel" [(ngModel)]="formData.OrderID">
     <div class="form-group">
         <label>Food Item</label>
-        <select name="ItemID" #ItemID="ngModel" [(ngModel)]="formData.ItemID" class="form-control" (change)='onChangeItem($event.target)'>
+        <select name="ItemID" #ItemID="ngModel" [(ngModel)]="formData.ItemID" class="form-control" (change)='onChangeItem($event.target)' [class.is-invalid]="!isValid && formData.ItemID == 0">
             <option value="0">-select-</option>
-            <option *ngFor="let item of items" value="{{item.ItemID}}">{{item.Name}}</option>
+            <option *ngFor="let item of commonService.itemsList" value="{{item.ItemID}}">{{item.ItemName}}</option>
         </select>
     </div>
     <div class="form-row">
@@ -20,13 +20,13 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text">$</div>
                 </div>
-                <input disabled name="Price" #Price="ngModel" [(ngModel)]="formData.Price" class="form-control">
+                <input readonly name="Price" #Price="ngModel" [(ngModel)]="formData.Price" class="form-control">
             </div>
         </div>
 
         <div class="form-group col-md-6">
             <label>Quantity</label>
-            <input type="number" name="Quantity" #Quantity="ngModel" [(ngModel)]="formData.Quantity" class="form-control" (keyup)="updateTotal()">
+            <input type="number" name="Quantity" #Quantity="ngModel" [(ngModel)]="formData.Quantity" class="form-control" (keyup)="updateTotal()" [class.is-invalid]="!isValid && formData.Quantity == 0">
         </div>
     </div>
     <div class="form-row">
@@ -36,7 +36,7 @@
                 <div class="input-group-prepend">
                     <div class="input-group-text">$</div>
                 </div>
-                <input disabled name="Total" #Total="ngModel" [(ngModel)]="formData.Total" class="form-control">
+                <input readonly name="Total" #Total="ngModel" [(ngModel)]="formData.Total" class="form-control">
             </div>
         </div>
     </div>

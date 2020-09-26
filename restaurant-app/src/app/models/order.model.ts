@@ -2,6 +2,6 @@ export class Order {
     OrderID: number;
     OrderNum: string;
     CustomerID: number;
-    PostMethod: string;
+    PaymentID: number;
     TotalRevenu: number;
 }

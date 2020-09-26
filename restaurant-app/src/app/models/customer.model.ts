@@ -1,4 +1,4 @@
 export class Customer {
     CustomerID: number;
-    Name: string;
+    CustomerName: string;
 }

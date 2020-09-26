@@ -13,6 +13,8 @@ import { CustomerService } from './services/customer.service';
 import { ItemService } from './services/Item.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog'
+import { CommonService } from "./services/common.service";
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,7 @@ import { MatDialogModule } from '@angular/material/dialog'
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', redirectTo: 'order', pathMatch: 'full' },
-      { path: 'orders', component: OrderComponent },
+      { path: 'orders', component: OrdersComponent },
       {
         path: 'order', children: [
           { path: '', component: OrderComponent },
@@ -37,12 +39,14 @@ import { MatDialogModule } from '@angular/material/dialog'
       }
     ]),
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    HttpClientModule
   ],
   providers: [
     OrderService,
     CustomerService,
-    ItemService
+    ItemService,
+    CommonService
   ],
   bootstrap: [AppComponent]
 })
