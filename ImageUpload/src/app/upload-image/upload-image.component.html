@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+        <div class="col s8 offset-2">
+            <div class="card-panel teal lighten-2">
+                <h4 class="center white-text">Image Library</h4>
+            </div>
+            <form #imageForm="ngForm" (submit)="onSubmit(Caption, Image)">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="text" #Caption ngModel name="Caption" id="Caption" required/>
+                        <label for="Caption">Caption</label>
+                    </div>
+                    
+                </div>
+                <img style="width: 128px;height: 94px;" [src]="imageUrl" (click)="onClickForFile(Image)">
+                <input type="file" #Image accept="image/*" (change)="handleFileInput($event.target.files)">
+                <br>
+                <button type="submit" class="btn-large btn-submit" [disabled]="Image.value=='' || !imageForm.valid">submit</button>
+            </form>
+        </div>
+    </div>
+</div>
