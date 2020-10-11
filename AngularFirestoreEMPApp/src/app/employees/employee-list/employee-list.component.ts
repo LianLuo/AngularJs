@@ -22,7 +22,7 @@ export class EmployeeListComponent implements OnInit {
       this.list = res.map(item => {
         return {
           id: item.payload.doc.id,
-          ...item.payload.doc.data()
+          ...item.payload.doc.data() as any
         } as Employee;
       });
     });

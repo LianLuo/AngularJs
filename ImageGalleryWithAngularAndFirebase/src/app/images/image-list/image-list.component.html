@@ -1,0 +1,28 @@
+<table *ngIf="imageList">
+    <tr *ngFor="let i of rowIndexArray">
+        <td>
+            <div class="imagebox" *ngIf="i==0">
+                <a routerLink="/image/upload">
+                    <img class="img-fluid" style="width:200px;height:200px" [src]="uploadPlaceholderImage">
+                    <span class="imagebox-desc">Insert New Image</span>
+                </a>
+            </div>
+            <div class="imagebox" *ngIf="i != 0">
+                <img class="img-fluid" style="width:200px;height:200px" [src]="imageList[3*i-1].imageUrl">
+                <span class="imagebox-desc">{{imageList[3*i-1].caption}}</span>
+            </div>
+        </td>
+        <td>
+            <div class="imagebox" *ngIf="imageList[3*i]">
+                <img class="img-fluid" style="width:200px;height:200px" [src]="imageList[3*i].imageUrl">
+                <span class="imagebox-desc">{{imageList[3*i].caption}}</span>
+            </div>
+        </td>
+        <td>
+            <div class="imagebox" *ngIf="imageList[3*i+1]">
+                <img class="img-fluid" style="width:200px;height:200px" [src]="imageList[3*i+1].imageUrl">
+                <span class="imagebox-desc">{{imageList[3*i+1].caption}}</span>
+            </div>
+        </td>
+    </tr>
+</table>
